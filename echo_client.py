@@ -8,12 +8,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     print(f"Conectado ao servidor em {HOST}:{PORT}")
 
     while True:
-        mensagem = input("Digite uma mensagem ('sair' para encerrar): ")
-
-        if mensagem.lower() == 'sair':
+        msg = input("Mensagem ('sair' para encerrar): ")
+        if msg.lower() == 'sair':
             break
 
-        s.sendall(mensagem.encode())
-        resposta = s.recv(1024).decode()
+        s.sendall(msg.encode())
+        data = s.recv(1024).decode()
 
-        print(f"Servidor respondeu: {resposta}")
+        print(f"[Servidor]: {data}")
+
+        if data == "Servidor ocupado. Tente mais tarde.":
+            break
